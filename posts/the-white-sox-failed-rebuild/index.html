@@ -280,6 +280,580 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>whitesoxgame <span class="ot">&lt;-</span> mlbgamelogs <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Season, Tm) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"CHW"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">WinPCT =</span> Wins<span class="sc">/</span>(Wins <span class="sc">+</span> Losses)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tm, Season, WinPCT, Home, Away, Wins, Losses, Date) </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>CWS2021 <span class="ot">&lt;-</span> whitesoxgame <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="st">"2021"</span>) </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">data=</span>CWS2021, <span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>WinPCT, <span class="at">group=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-15"</span>)) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-04-14"</span>), <span class="at">y=</span>.<span class="dv">500</span>), <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-04-12"</span>), <span class="at">y=</span>.<span class="dv">525</span>, <span class="at">label=</span><span class="st">"Rodon no-no"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-16"</span>), <span class="at">y=</span>.<span class="dv">632</span>), <span class="at">color=</span><span class="st">"#8FBCE6"</span>) <span class="sc">+</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-24"</span>), <span class="at">y=</span>.<span class="dv">647</span>, <span class="at">label=</span><span class="st">"1st in AL"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"#8FBCE6"</span>) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-23"</span>), <span class="at">y=</span>.<span class="dv">565</span>)) <span class="sc">+</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-30"</span>), <span class="at">y=</span>.<span class="dv">610</span>, <span class="at">label=</span><span class="st">"Won the</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">Central"</span>), <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-03"</span>), <span class="at">y=</span>.<span class="dv">577</span>), <span class="at">color=</span><span class="st">"royalblue"</span>) <span class="sc">+</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-03"</span>), <span class="at">y=</span>.<span class="dv">545</span>, <span class="at">label=</span><span class="st">"Bobby's final sox game"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"royalblue"</span>) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-18"</span>), <span class="at">y=</span>.<span class="dv">608</span>), <span class="at">color=</span><span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-18"</span>), <span class="at">y=</span>.<span class="dv">545</span>, <span class="at">label=</span><span class="st">"White Sox take 2 out of 3</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">vs Astros, 1st in AL"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-27"</span>), <span class="at">y=</span>.<span class="dv">576</span>), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-06"</span>), <span class="at">y=</span>.<span class="dv">620</span>, <span class="at">label=</span><span class="st">"White Sox </span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">fully healthy"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-12"</span>), <span class="at">y=</span>.<span class="dv">586</span>), <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-10"</span>), <span class="at">y=</span>.<span class="dv">63</span>, <span class="at">label=</span><span class="st">"Field of Dreams</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="st">Walk off"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-13"</span>), <span class="at">y=</span>.<span class="dv">606</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-13"</span>), <span class="at">y=</span>.<span class="dv">635</span>, <span class="at">label=</span><span class="st">"All Star Break"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-10"</span>), <span class="at">y=</span>.<span class="dv">2</span>, <span class="at">label=</span><span class="st">"Sticky Substance Ban"</span>), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="SOXTOBER.PNG" class="img-fluid figure-img"></p>
+<figcaption>Soxtober 2021</figcaption>
+</figure>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TopAL <span class="ot">&lt;-</span> mlbgamelogs <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Season, Tm) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Tm <span class="sc">==</span> <span class="st">"CHW"</span> <span class="sc">|</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Tm <span class="sc">==</span> <span class="st">"TBR"</span> <span class="sc">|</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    Tm <span class="sc">==</span> <span class="st">"HOU"</span> <span class="sc">|</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    Tm <span class="sc">==</span> <span class="st">"BOS"</span> <span class="sc">|</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    Tm <span class="sc">==</span> <span class="st">"NYY"</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">WinPCT =</span> Wins<span class="sc">/</span>(Wins <span class="sc">+</span> Losses)) <span class="sc">|&gt;</span> <span class="fu">select</span>(Tm, Season, WinPCT, Home, Away, Wins, Losses, Date) </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>TopAL2021 <span class="ot">&lt;-</span> TopAL <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="st">"2021"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>NYY2021 <span class="ot">&lt;-</span> TopAL2021 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"NYY"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>TBR2021 <span class="ot">&lt;-</span> TopAL2021 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"TBR"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>HOU2021 <span class="ot">&lt;-</span> TopAL2021 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"HOU"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>BOS2021 <span class="ot">&lt;-</span> TopAL2021 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"BOS"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">data=</span>TopAL2021, <span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>WinPCT, <span class="at">group=</span>Tm, <span class="at">color=</span>Tm))  <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"black"</span>, <span class="st">"orange"</span>, <span class="st">"navy"</span>, <span class="st">"cyan"</span>)) <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-16"</span>), <span class="at">color=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-16"</span>), <span class="at">y=</span>.<span class="dv">2</span>, <span class="at">label=</span><span class="st">"Sticky Substance Ban"</span>), <span class="at">color=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What caused this regression?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>CWSHome <span class="ot">&lt;-</span> whitesoxgame <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Home <span class="sc">==</span> <span class="st">"CHW"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Season, Tm) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Tm, Date) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Wins <span class="sc">==</span> <span class="fu">max</span>(Wins) <span class="sc">&amp;</span> Losses <span class="sc">==</span> <span class="fu">max</span>(Losses)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">WinPCT =</span> Wins<span class="sc">/</span>(Wins <span class="sc">+</span> Losses)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tm, Season, WinPCT, Home, Away)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>CWSGooseEra <span class="ot">&lt;-</span> CWSHome <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2019"</span> <span class="sc">|</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2020"</span> <span class="sc">|</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2021"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>CWSPostGoose <span class="ot">&lt;-</span> CWSHome <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2022"</span> <span class="sc">|</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2023"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>CWSGooseOverall <span class="ot">&lt;-</span> CWSHome <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2019"</span> <span class="sc">|</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2020"</span> <span class="sc">|</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2021"</span> <span class="sc">|</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2022"</span> <span class="sc">|</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2023"</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>CWSGooseEra, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">weight=</span>WinPCT), <span class="at">fill=</span><span class="st">"black"</span>) <span class="sc">+</span>  </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>CWSPostGoose, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">weight=</span>WinPCT), <span class="at">fill=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Win Percentage at Home"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"The Goose head that was in right field, White Sox Home Record"</span>, </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"The goose head that was in Right field in 2019 to 2021 then the fall off with the White Sox home </span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="st">record"</span>, </span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports-Reference.com | By Bobby Hessling"</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>CWS1921 <span class="ot">&lt;-</span> whitesoxgame <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2019"</span> <span class="sc">|</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2020"</span> <span class="sc">|</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2021"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Season, Tm) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(Tm, Date) <span class="sc">|&gt;</span> <span class="fu">filter</span>(Wins <span class="sc">==</span> <span class="fu">max</span>(Wins) <span class="sc">&amp;</span> Losses <span class="sc">==</span> <span class="fu">max</span>(Losses)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">WinPCT =</span> Wins<span class="sc">/</span>(Wins <span class="sc">+</span> Losses)) <span class="sc">|&gt;</span> <span class="fu">select</span>(Tm, Season, WinPCT, Home, Away)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>CWS2223 <span class="ot">&lt;-</span> whitesoxgame <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2022"</span> <span class="sc">|</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  Season <span class="sc">==</span> <span class="st">"2023"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Season, Tm) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(Tm, Date) <span class="sc">|&gt;</span> <span class="fu">filter</span>(Wins <span class="sc">==</span> <span class="fu">max</span>(Wins) <span class="sc">&amp;</span> Losses <span class="sc">==</span> <span class="fu">max</span>(Losses)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">WinPCT =</span> Wins<span class="sc">/</span>(Wins <span class="sc">+</span> Losses)) <span class="sc">|&gt;</span> <span class="fu">select</span>(Tm, Season, WinPCT, Home, Away)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>CWS1921, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">weight=</span>WinPCT), <span class="at">fill=</span><span class="st">"black"</span>) <span class="sc">+</span>  </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>CWS2223, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">weight=</span>WinPCT), <span class="at">fill=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Season Win Percentage"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"The Goose head that was in right field, White Sox overall Record"</span>, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"The goose head that was in Right field in 2019 to 2021 then the fall off with the White Sox </span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="st">overall record"</span>, </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports-Reference.com | By Bobby Hessling"</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But what made everyone think that the white sox were going to be good? The 2019 Hype</p>
+<p><strong>YOAN MONCADA</strong></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hitters2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hitters2019.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Name =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>,<span class="st">""</span>, Name, <span class="at">fixed=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Name =</span> <span class="fu">gsub</span>(<span class="st">"#"</span>,<span class="st">""</span>, Name, <span class="at">fixed=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 136 Columns: 31
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (5): Name, Tm, Lg, Position, Name-additional
+dbl (26): Rk, Age, Games, PA, AB, R, H, 2B, 3B, HR, RBI, SB, CS, BB, SO, Bat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>whitesoxhitters <span class="ot">&lt;-</span> hitters2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"CHW"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>thirdbase2019 <span class="ot">&lt;-</span> hitters2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5"</span> <span class="sc">|</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"56"</span> <span class="sc">|</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5/DH"</span> <span class="sc">|</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5/H"</span> <span class="sc">|</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5/HD6"</span> <span class="sc">|</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5H/D4"</span> <span class="sc">|</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*597/3DH"</span> <span class="sc">|</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5H4/37"</span> <span class="sc">|</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5/HD"</span> <span class="sc">|</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*54/HD"</span> <span class="sc">|</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*56/H"</span> <span class="sc">|</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*5H"</span> <span class="sc">|</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"54/HD"</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>thirdbase2019, <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS)) <span class="sc">+</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>thirdbase2019, </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS, <span class="at">label=</span>Name)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>.<span class="dv">30</span>, <span class="at">xmax=</span>.<span class="dv">318</span>, <span class="at">ymin=</span><span class="fl">0.9</span>, <span class="at">ymax=</span><span class="dv">1</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Batting Average"</span>, </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"OPS (On Base + Slugging"</span>, </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"2019 Third Baseman"</span>, </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Where 14 third baseman in 2019 stack up amongst each other"</span>, </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>hitters2019, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS), <span class="at">color=</span><span class="st">"grey"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxhitters,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS), <span class="at">color=</span><span class="st">"black"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.30</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.80</span>, <span class="at">color=</span><span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.85</span>, <span class="at">color=</span><span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxhitters, </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS, <span class="at">label=</span>Name)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">205</span>, <span class="at">y=</span>.<span class="dv">868</span>, <span class="at">label=</span><span class="st">"Good OBP"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">211</span>, <span class="at">y=</span>.<span class="dv">815</span>, <span class="at">label=</span><span class="st">"Above Average OBP"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>.<span class="dv">30</span>, <span class="at">xmax=</span>.<span class="dv">34</span>, <span class="at">ymin=</span><span class="fl">0.9</span>, <span class="at">ymax=</span><span class="fl">1.15</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">3205</span>, <span class="at">y=</span><span class="fl">1.17</span>, <span class="at">label=</span><span class="st">"MVP Players"</span>), <span class="at">size=</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">291</span>, <span class="at">y=</span><span class="fl">1.083</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">282</span>, <span class="at">y=</span><span class="fl">1.1</span>, <span class="at">label=</span><span class="st">"Mike Trout 2019 </span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="st">AL MVP"</span>), <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">305</span>, <span class="at">y=</span><span class="fl">1.035</span>), <span class="at">color=</span><span class="st">"#005A9C"</span>) <span class="sc">+</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">3113</span>, <span class="at">y=</span><span class="fl">1.087</span>, <span class="at">label=</span><span class="st">"Cody Bellinger </span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="st">2019 NL MVP"</span>), <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">color=</span><span class="st">"#005A9C"</span>) <span class="sc">+</span> </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Batting Average"</span>, </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"OPS (On Base + Slugging"</span>, </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"All 2019 Major League Hitters"</span>, </span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"White Sox hitters amongst all of the MLB where rank in batting average and OPS"</span>, </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>alhitters <span class="ot">&lt;-</span> hitters2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Lg <span class="sc">==</span> <span class="st">"AL"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>almvp2019 <span class="ot">&lt;-</span> alhitters <span class="sc">|&gt;</span> <span class="fu">filter</span>(OPS <span class="sc">&gt;</span> <span class="fl">0.900</span> <span class="sc">&amp;</span> BatAvg <span class="sc">&gt;</span> <span class="fl">0.300</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>almvp2019, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>almvp2019, </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS, <span class="at">label=</span>Name), <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Batting Average"</span>, </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"OPS (On Base + Slugging"</span>, </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"White Sox Hitters"</span>, </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Zoomed in image of where Yoan Moncada stacked up against the "</span>, </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The Bats came alive</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>alhitters2019 <span class="ot">&lt;-</span> hitters2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Lg <span class="sc">==</span> <span class="st">"AL"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>alhitters2019, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxhitters,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS), <span class="at">color=</span><span class="st">"black"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.30</span>) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxhitters, </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS, <span class="at">label=</span>Name)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">291</span>, <span class="at">y=</span><span class="fl">1.083</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">282</span>, <span class="at">y=</span><span class="fl">1.1</span>, <span class="at">label=</span><span class="st">"Mike Trout 2019 </span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="st">AL MVP"</span>), <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Batting Average"</span>, </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"OPS (On Base + Slugging"</span>, </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"White Sox Hitters"</span>, </span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"The plot of White Sox hitters Batting Average and OPS compared to </span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="st">the rest of the American League"</span>, </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Tim Anderson Propaganda</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>shortstop2019 <span class="ot">&lt;-</span> hitters2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6"</span> <span class="sc">|</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/DH"</span> <span class="sc">|</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6D/H"</span> <span class="sc">|</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/H"</span> <span class="sc">|</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/HD7"</span> <span class="sc">|</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/3H4"</span> <span class="sc">|</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/HD5"</span> <span class="sc">|</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  Position <span class="sc">==</span> <span class="st">"*6/D"</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>shortstop2019, <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS)) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>shortstop2019, </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>BatAvg, <span class="at">y=</span>OPS, <span class="at">label=</span>Name)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>.<span class="dv">3</span>, <span class="at">xmax=</span>.<span class="dv">340</span>, <span class="at">ymin=</span><span class="fl">0.850</span>, <span class="at">ymax=</span><span class="dv">1</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.85</span>, <span class="at">color=</span><span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">205</span>, <span class="at">y=</span>.<span class="dv">868</span>, <span class="at">label=</span><span class="st">"Good OBP"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">329</span>, <span class="at">y=</span>.<span class="dv">848</span>, <span class="at">label=</span><span class="st">"Tim Anderson"</span>), <span class="at">size=</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">2758</span>, <span class="at">y=</span>.<span class="dv">834</span>, <span class="at">label=</span><span class="st">"Javier Baez"</span>), <span class="at">size=</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">335</span>, <span class="at">y=</span>.<span class="dv">865</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>.<span class="dv">281</span>, <span class="at">y=</span>.<span class="dv">847</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Batting Average"</span>, </span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"OPS (On Base + Slugging"</span>, </span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"20 of the 2019 Shortstops"</span>, </span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Where the 20 shortstops stacked up against one another when it came to Batting Average and OPS"</span>, </span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Luis Robert Propaganda</p>
+<p>Lucas Giolito Propaganda</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pitching2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"pitching2019.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 62 Columns: 36
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (4): Name, Tm, Lg, Name-additional
+dbl (32): Rk, Age, W, L, W-L%, ERA, G, GS, GF, CG, SHO, SV, IP, H, R, ER, HR...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>whitesoxpitching <span class="ot">&lt;-</span> pitching2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"CHW"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>alpitching2019 <span class="ot">&lt;-</span> pitching2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Lg <span class="sc">==</span> <span class="st">"AL"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>giolito <span class="ot">&lt;-</span> pitching2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Name <span class="sc">==</span> <span class="st">"Lucas Giolito"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>alpitching2019, </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>giolito,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span>  </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>alpitching2019, </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP, <span class="at">label=</span>Name)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>giolito, </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span><span class="fl">3.55</span>, <span class="at">y=</span><span class="fl">1.095</span>, <span class="at">label=</span>Name), <span class="at">color=</span><span class="st">"blue"</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span><span class="fl">2.45</span>, <span class="at">xmax=</span><span class="fl">3.5</span>, <span class="at">ymin=</span><span class="fl">0.8</span>, <span class="at">ymax=</span><span class="fl">1.1</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Earned Run Average"</span>, </span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"WHIP (Walks Hits Innings Pitched"</span>, </span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"2019 American League Starting Pitching"</span>, </span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Highlighting Lucas Giolito in where he ranks compared to the rest of teh American League starters"</span>, </span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>pitching2019, <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP), <span class="at">color=</span><span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxpitching, <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP), <span class="at">color=</span><span class="st">"black"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>whitesoxpitching, </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP, <span class="at">label=</span>Name)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span><span class="dv">2</span>, <span class="at">xmax=</span><span class="fl">3.5</span>, <span class="at">ymin=</span><span class="fl">0.8</span>, <span class="at">ymax=</span><span class="fl">1.1</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">2.43</span>, <span class="at">y=</span><span class="fl">0.971</span>), <span class="at">color=</span><span class="st">"#002D72"</span>) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">2.2</span>, <span class="at">y=</span><span class="fl">0.919</span>, <span class="at">label=</span><span class="st">"Jacob deGrom 2019 </span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">NL Cy Young"</span>), <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">color=</span><span class="st">"#002D72"</span>) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">2.58</span>, <span class="at">y=</span><span class="fl">0.803</span>), <span class="at">color=</span><span class="st">"#EB6E1F"</span>) <span class="sc">+</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">3.29</span>, <span class="at">y=</span><span class="fl">0.825</span>, <span class="at">label=</span><span class="st">"Justin Verlander 2019 AL Cy Young"</span>), <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">color=</span><span class="st">"#EB6E1F"</span>) <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Earned Run Average"</span>, </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"WHIP (Walks Hits Innings Pitched"</span>, </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"2019 Starting Pitching with White Sox players highlighted"</span>, </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Three of the White Sox players highlighted "</span>, </span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>under25pitch <span class="ot">&lt;-</span> pitching2019 <span class="sc">|&gt;</span> <span class="fu">filter</span>(Age <span class="sc">&lt;</span> <span class="st">"25"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>under25pitch, <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>giolito, <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>under25pitch, </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>ERA, <span class="at">y=</span>WHIP, <span class="at">label=</span>Name),</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>giolito, </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span><span class="fl">3.509</span>, <span class="at">y=</span><span class="fl">1.091</span>, <span class="at">label=</span>Name), <span class="at">color=</span><span class="st">"blue"</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span><span class="fl">2.7</span>, <span class="at">xmax=</span><span class="fl">3.5</span>, <span class="at">ymin=</span><span class="fl">0.8</span>, <span class="at">ymax=</span><span class="fl">1.1</span>), <span class="at">fill=</span><span class="st">"lightgreen"</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Earned Run Average"</span>, </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"WHIP (Walks Hits Innings Pitched"</span>, </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"2019 Starting Pitching"</span>, </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"MLB starting pitching"</span>, </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Sports Reference | By Bobby Hessling"</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">data=</span>CWS2021, <span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>WinPCT, <span class="at">group=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-15"</span>)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-04-14"</span>), <span class="at">y=</span>.<span class="dv">500</span>), <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-04-12"</span>), <span class="at">y=</span>.<span class="dv">525</span>, <span class="at">label=</span><span class="st">"Rodon no-no"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-16"</span>), <span class="at">y=</span>.<span class="dv">632</span>), <span class="at">color=</span><span class="st">"#8FBCE6"</span>) <span class="sc">+</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-06-24"</span>), <span class="at">y=</span>.<span class="dv">647</span>, <span class="at">label=</span><span class="st">"1st in AL"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"#8FBCE6"</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-23"</span>), <span class="at">y=</span>.<span class="dv">565</span>)) <span class="sc">+</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-30"</span>), <span class="at">y=</span>.<span class="dv">610</span>, <span class="at">label=</span><span class="st">"Won the</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">Central"</span>), <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-03"</span>), <span class="at">y=</span>.<span class="dv">577</span>), <span class="at">color=</span><span class="st">"royalblue"</span>) <span class="sc">+</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-03"</span>), <span class="at">y=</span>.<span class="dv">545</span>, <span class="at">label=</span><span class="st">"Bobby's final sox game"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"royalblue"</span>) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-18"</span>), <span class="at">y=</span>.<span class="dv">608</span>), <span class="at">color=</span><span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-18"</span>), <span class="at">y=</span>.<span class="dv">545</span>, <span class="at">label=</span><span class="st">"White Sox take 2 out of 3</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="st">vs Astros, 1st in AL"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-27"</span>), <span class="at">y=</span>.<span class="dv">576</span>), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-09-06"</span>), <span class="at">y=</span>.<span class="dv">620</span>, <span class="at">label=</span><span class="st">"White Sox </span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="st">fully healthy"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-12"</span>), <span class="at">y=</span>.<span class="dv">586</span>), <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-08-10"</span>), <span class="at">y=</span>.<span class="dv">63</span>, <span class="at">label=</span><span class="st">"Field of Dreams</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="st">Walk off"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-13"</span>), <span class="at">y=</span>.<span class="dv">606</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-13"</span>), <span class="at">y=</span>.<span class="dv">635</span>, <span class="at">label=</span><span class="st">"All Star Break"</span>), <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.Date</span>(<span class="st">"2021-07-10"</span>), <span class="at">y=</span>.<span class="dv">2</span>, <span class="at">label=</span><span class="st">"Sticky Substance Ban"</span>), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><img src="IMG_1416.JPG" class="img-fluid"></p>
+<p>October 12th 2021, Leury Garcia, Dylan Cease, Carlos Rodon, Lucas Giolito, Aaron Bummer, and Michael Kopech all look on with the rest of the Sox fans. Frustrated after a 10-1 loss in Game 4 of the 2021 ALDS vs the Houston Astros. Now every Sox fan can relate to this image after the Sox have crumbled faster then Rome did in 476 BC</p>
 
 
 
