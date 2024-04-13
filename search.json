@@ -7,11 +7,18 @@
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
-    "objectID": "posts/introduction/index.html",
-    "href": "posts/introduction/index.html",
-    "title": "Introduction",
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
     "section": "",
-    "text": "I am Bobby Hessling, I am a Junior Sports Media & Communication Major."
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Latest Posts",
+    "section": "",
+    "text": "The White Sox Failed rebuild\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 14, 2024\n\n\nBobby Hessling\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2024\n\n\nBobby Hessling\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 3, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 31, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -21,17 +28,17 @@
     "text": "About this blog"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Latest Posts",
+    "objectID": "posts/introduction/index.html",
+    "href": "posts/introduction/index.html",
+    "title": "Introduction",
     "section": "",
-    "text": "Introduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2024\n\n\nBobby Hessling\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 3, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 31, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "I am Bobby Hessling, I am a Junior Sports Media & Communication Major."
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "posts/the-white-sox-failed-rebuild/index.html",
+    "href": "posts/the-white-sox-failed-rebuild/index.html",
+    "title": "The White Sox Failed rebuild",
     "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "Code\nlibrary(tidyverse)\nlibrary(ggrepel)\n\nmlbgamescores2016 &lt;- read_csv(\"mlbgamescores2016.csv\") |&gt; mutate(Season = 2016)\n\nmlbgamescores2017 &lt;- read_csv(\"mlbgamescores2017.csv\") |&gt; mutate(Season = 2017)\n\nmlbgamescores2018 &lt;- read_csv(\"mlbgamescores2018.csv\") |&gt; mutate(Season = 2018)\n\nmlbgamescores2019 &lt;- read_csv(\"mlbgamescores2019.csv\") |&gt; mutate(Season = 2019)\n\nmlbgamescores2020 &lt;- read_csv(\"mlbgamescores2020.csv\") |&gt; mutate(Season = 2020)\n\nmlbgamescores2021 &lt;- read_csv(\"mlbgamescores2021.csv\") |&gt; mutate(Season = 2021)\n\nmlbgamescores2022 &lt;- read_csv(\"mlbgamescores2022.csv\") |&gt; mutate(Season = 2022)\n\nmlbgamescores2023 &lt;- read_csv(\"mlbgamescores2023.csv\") |&gt; mutate(Season = 2023) \n\nmlbgamelogs &lt;- bind_rows(mlbgamescores2016, mlbgamescores2017, mlbgamescores2018, mlbgamescores2019, mlbgamescores2020, mlbgamescores2021, mlbgamescores2022, mlbgamescores2023)\n\nmlboverall &lt;- mlbgamelogs |&gt; group_by(Season, Tm) |&gt; arrange(Tm, Date) |&gt; filter(Wins == max(Wins) & Losses == max(Losses)) |&gt; mutate(WinPCT = Wins/(Wins + Losses))\n\nwhitesoxpct &lt;- mlboverall |&gt; filter(Tm == \"CHW\")\n\natlantapct &lt;- mlboverall |&gt; filter(Tm == \"ATL\")\n\npadrespct &lt;- mlboverall |&gt; filter(Tm == \"SDP\")\n\nggplot() + \n  geom_line(data=mlboverall, aes(x=Season, y=WinPCT, group=Tm), color = \"grey\")  +\n  geom_line(data=whitesoxpct, aes(x=Season, y=WinPCT, group=Tm), color = \"black\") +\n  geom_line(data=atlantapct, aes(x=Season, y=WinPCT, group=Tm), color = \"red\") +\n  geom_line(data=padrespct, aes(x=Season, y=WinPCT, group=Tm), color = \"#FFC425\") +\n  geom_point(aes(x=2016, y=.481), color=\"black\") +\n  geom_text(aes(x=2016, y=.495, label=\"78-84\"), size=3, color=\"black\") +\n  geom_point(aes(x=2017, y=.414), color=\"black\") +\n  geom_text(aes(x=2017, y=.400, label=\"67-95\"), size=3, color=\"black\") +\n  geom_point(aes(x=2018, y=.383), color=\"black\") +\n  geom_text(aes(x=2018, y=.369, label=\"62-100\"), size=3, color=\"black\") +\n  geom_point(aes(x=2019, y=.447), color=\"black\") +\n  geom_text(aes(x=2019, y=.475, label=\"72-89\"), size=3, color=\"black\") +\n  geom_point(aes(x=2020, y=.583), color=\"black\") +\n  geom_text(aes(x=2020, y=.550, label=\"35-25\"), size=3, color=\"black\") +\n  geom_point(aes(x=2021, y=.574), color=\"black\") +\n  geom_text(aes(x=2021, y=.585, label=\"93-69\"), size=3, color=\"black\") +\n  geom_point(aes(x=2022, y=.500), color=\"black\") +\n  geom_text(aes(x=2022, y=.520, label=\"81-81\"), size=3, color=\"black\") +\n  geom_point(aes(x=2023, y=.377), color=\"black\") +\n  geom_text(aes(x=2023, y=.365, label=\"61-101\"), size=3, color=\"black\") +\n  geom_point(aes(x=2016, y=.422), color=\"red\") +\n  geom_text(aes(x=2016, y=.438, label=\"68-93\"), size=3, color=\"red\") +\n  geom_point(aes(x=2017, y=.444), color=\"red\") +\n  geom_text(aes(x=2017, y=.475, label=\"72-90\"), size=3, color=\"red\") +\n  geom_point(aes(x=2018, y=.556), color=\"red\") +\n  geom_text(aes(x=2018, y=.570, label=\"90-72\"), size=3, color=\"red\") +\n  geom_point(aes(x=2019, y=.599), color=\"red\") +\n  geom_text(aes(x=2019, y=.610, label=\"97-65\"), size=3, color=\"red\") +\n  geom_point(aes(x=2020, y=.583), color=\"red\") +\n  geom_text(aes(x=2020, y=.565, label=\"35-25\"), size=3, color=\"red\") +\n  geom_point(aes(x=2021, y=.547), color=\"red\") +\n  geom_text(aes(x=2021, y=.532, label=\"88-73\"), size=3, color=\"red\") +\n  geom_point(aes(x=2022, y=.623), color=\"red\") +\n  geom_text(aes(x=2022, y=.635, label=\"101-61\"), size=3, color=\"red\") +\n  geom_point(aes(x=2023, y=.642), color=\"red\") +\n  geom_text(aes(x=2023, y=.653, label=\"104-58\"), size=3, color=\"red\") +\n  geom_point(aes(x=2016, y=.420), color=\"#FFC425\") +\n  geom_text(aes(x=2016, y=.410, label=\"68-94\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2017, y=.438), color=\"#FFC425\") +\n  geom_text(aes(x=2017, y=.385, label=\"71-91\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2018, y=.407), color=\"#FFC425\") +\n  geom_text(aes(x=2018, y=.420, label=\"66-96\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2019, y=.432), color=\"#FFC425\") +\n  geom_text(aes(x=2019, y=.420, label=\"70-92\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2020, y=.617), color=\"#FFC425\") +\n  geom_text(aes(x=2020, y=.629, label=\"37-23\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2021, y=.488), color=\"#FFC425\") +\n  geom_text(aes(x=2021, y=.475, label=\"79-83\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2022, y=.549), color=\"#FFC425\") +\n  geom_text(aes(x=2022, y=.560, label=\"89-73\"), size=3, color=\"#2F241D\") +\n  geom_point(aes(x=2023, y=.506), color=\"#FFC425\") +\n  geom_text(aes(x=2023, y=.520, label=\"82-80\"), size=3, color=\"#2F241D\") +\n  theme_minimal()"
   }
 ]
